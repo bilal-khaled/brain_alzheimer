@@ -1,5 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request ,url_for, redirect
+import joblib
 import tensorflow as tf
+import pandas as pd
 from PIL import Image
 import numpy as np
 import os
@@ -7,18 +9,67 @@ import os
 app = Flask(__name__)
 app.config['STATIC_URL'] = '/static'
 
-# Load the trained CNN model
+# Load the trained models
+model_ML = joblib.load('models/model_filename.pkl')
 model = tf.keras.models.load_model('models/model.h5')
 
 @app.route('/')
 def index():
     return render_template('start.html')
+
 @app.route('/page')
 def show_page():
     return render_template('page.html')
-@app.route('/machine')
+
+@app.route('/machine', methods=['GET', 'POST'])
 def show_machine():
+    if request.method == 'POST':
+        # Get the form data
+        gender = request.form['gender']
+        age = int(request.form['age'])
+        ses = int(request.form['ses'])
+        mmse = int(request.form['mmse'])
+        nwbv = float(request.form['nwbv'])
+        educ = int(request.form['educ'])
+        cdr = float(request.form['cdr'])  # Add 'cdr' to the form data
+        etiv = float(request.form['etiv'])  # Add 'etiv' to the form data
+        asf = float(request.form['asf'])  # Add 'asf' to the form data
+
+        # Convert gender to numerical representation
+        gender_mapping = {'1': 0, '0': 1}  # Update gender_mapping
+        gender_encoded = gender_mapping.get(gender, -1)  # Assign -1 for unknown values
+
+        # Create a DataFrame with the input data
+        data = pd.DataFrame({
+            'M/F': [gender_encoded],
+            'Age': [age],
+            'EDUC': [educ],
+            'SES': [ses],
+            'MMSE': [mmse],
+            'CDR': [cdr],
+            'eTIV': [etiv],
+            'nWBV': [nwbv],
+            'ASF': [asf]
+        })
+
+        # Perform classification using the machine learning model
+        prediction = model_ML.predict(data)[0]
+
+        # Convert the prediction to a meaningful label
+        if prediction == 0:
+            label = 'Non-Demented'
+        elif prediction == 1:
+            label = 'Demented'
+        else:
+            label = 'Converted'
+
+        # Render the template with the prediction result
+        # Render the template with the prediction result
+        return render_template('machine.html', prediction=label)
+
+    # For GET requests, clear the prediction result
     return render_template('machine.html')
+
 @app.route('/deep')
 def show_deep():
     return render_template('deep.html')
