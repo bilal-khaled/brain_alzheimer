@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.config['STATIC_URL'] = '/static'
 
 # Load the trained models
-model_ML = joblib.load('models/model_filename.pkl')
+model_ML = joblib.load('models/model_1.pkl')
 model = tf.keras.models.load_model('models/model.h5')
 
 @app.route('/')
@@ -30,10 +30,7 @@ def show_machine():
         ses = int(request.form['ses'])
         mmse = int(request.form['mmse'])
         nwbv = float(request.form['nwbv'])
-        educ = int(request.form['educ'])
-        cdr = float(request.form['cdr'])  # Add 'cdr' to the form data
-        etiv = float(request.form['etiv'])  # Add 'etiv' to the form data
-        asf = float(request.form['asf'])  # Add 'asf' to the form data
+
 
         # Convert gender to numerical representation
         gender_mapping = {'1': 0, '0': 1}  # Update gender_mapping
@@ -43,13 +40,9 @@ def show_machine():
         data = pd.DataFrame({
             'M/F': [gender_encoded],
             'Age': [age],
-            'EDUC': [educ],
             'SES': [ses],
             'MMSE': [mmse],
-            'CDR': [cdr],
-            'eTIV': [etiv],
             'nWBV': [nwbv],
-            'ASF': [asf]
         })
 
         # Perform classification using the machine learning model
