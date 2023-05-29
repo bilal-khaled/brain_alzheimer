@@ -27,9 +27,13 @@ def show_machine():
         # Get the form data
         gender = request.form['gender']
         age = int(request.form['age'])
+        educ = int(request.form['educ'])
         ses = int(request.form['ses'])
         mmse = int(request.form['mmse'])
+        cdr = float(request.form['cdr'])
+        etiv = int(request.form['etiv'])
         nwbv = float(request.form['nwbv'])
+        asf = float(request.form['asf'])
 
 
         # Convert gender to numerical representation
@@ -40,9 +44,14 @@ def show_machine():
         data = pd.DataFrame({
             'M/F': [gender_encoded],
             'Age': [age],
+            'EDUC': [educ],
             'SES': [ses],
             'MMSE': [mmse],
+            'CDR': [cdr],
+            'eTIV': [etiv],
             'nWBV': [nwbv],
+            'ASF': [asf],
+            
         })
 
         # Perform classification using the machine learning model
@@ -50,11 +59,11 @@ def show_machine():
 
         # Convert the prediction to a meaningful label
         if prediction == 0:
-            label = 'Non-Demented'
+            label = 'Converted'
         elif prediction == 1:
             label = 'Demented'
         else:
-            label = 'Converted'
+            label = 'Non-Demented'
 
         # Render the template with the prediction result
         # Render the template with the prediction result
