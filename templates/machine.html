@@ -11,10 +11,29 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css">
+    <script>
+        window.onload = function() {
+            var logo = document.querySelector('.navbar-brand');
+            logo.addEventListener('click', function() {
+                window.location.href = 'page';
+            });
+        };
+    </script>
 </head>
 
 <body>
     <section>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="../static/images/949ea004-f044-4549-803f-84bcee94c27b-removebg-preview.png" width="200" height="100" alt="">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav>
         <div class="container">
             <div class="contact-box">
                 <div class="left"></div>

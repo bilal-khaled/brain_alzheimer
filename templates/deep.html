@@ -12,7 +12,66 @@
         body {
             text-align: center;
         }
+
+        .upload-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .upload-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Hide the default file input */
+        input[type="file"] {
+            display: none;
+        }
+
+        /* Style the custom file input button */
+        .file-input-label {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .file-input-label:hover {
+            background-color: #0069d9;
+        }
+
+      /*  .file-input-label::before {
+       /*     content: "Choose File";
+      /*  }
+
+        /* Display the selected file name */
+        .file-name {
+            margin-top: 10px;
+            font-weight: bold;
+        }
     </style>
+    <script>
+        window.onload = function() {
+            var logo = document.querySelector('.navbar-brand');
+            logo.addEventListener('click', function() {
+                window.location.href = 'page';
+            });
+
+            // Display the selected file name
+            var fileInput = document.querySelector('#imageUpload');
+            var fileNameDisplay = document.querySelector('.file-name');
+
+            fileInput.addEventListener('change', function() {
+                fileNameDisplay.textContent = this.files[0].name;
+            });
+        };
+    </script>
 </head>
 <body>
     <section id="nav-bar">
@@ -36,14 +95,15 @@
                     <form method="POST" enctype="multipart/form-data" action="/classify">
                         <div class="form-group">
                             <label for="imageUpload"><b>Choose an image:</b></label>
+                            <label class="file-input-label" for="imageUpload">Choose File</label>
                             <input type="file" id="imageUpload" name="imageUpload" accept="image/*" required>
+                            <div class="file-name"></div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Upload and Classify</button>
+                        <button type="submit" class="upload-button">Upload and Classify</button>
                     </form>
                 </div>
             </div>
         </div>
     </section>
-    
 </body>
 </html>
