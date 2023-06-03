@@ -12,6 +12,12 @@
         body {
             text-align: center;
         }
+
+        .image-item img {
+            width: auto;
+            height: 400px;
+            max-width: 100%;
+        }
     </style>
     <script>
         window.onload = function() {
@@ -42,11 +48,24 @@
                 <div class="col-md-12">
                     <h2>Image Classification</h2>
                     <h3>Predicted Label: {{ predicted_class }}</h3>
-                    {% if image_path %}
-                        <img src="{{ url_for('static', filename=image_path) }}" alt="Uploaded Image" width="200" height="200">
-                    {% else %}
-                        <p>No image available.</p>
-                    {% endif %}
+                    <div class="image-container">
+                        {% if image_path %}
+                            <div class="image-item">
+                                <h4>Original Image</h4>
+                                <img src="{{ url_for('static', filename=image_path) }}" alt="Uploaded Image">
+                            </div>
+                        {% else %}
+                            <p>No original image available.</p>
+                        {% endif %}
+                        {% if shap_plot_path %}
+                            <div class="image-item">
+                                <h4>SHAP Plot</h4>
+                                <img src="{{ url_for('static', filename=shap_plot_path) }}" alt="SHAP Plot">
+                            </div>
+                        {% else %}
+                            <p>No SHAP plot available.</p>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
