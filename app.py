@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.config['STATIC_URL'] = '/static'
 
 # Load the trained models
-model_ML = joblib.load('models/model_1.pkl')
+model_ML = joblib.load('models/rfc_model.pkl')
 model = tf.keras.models.load_model('models/model.h5')
 
 # Load the shap DeepExplainer
