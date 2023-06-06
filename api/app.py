@@ -11,8 +11,8 @@ app = Flask(__name__)
 app.config['STATIC_URL'] = '/static'
 
 # Load the trained models
-model_ML = joblib.load('models/rfc_model.pkl')
-model = tf.keras.models.load_model('models/model.h5')
+model_ML = joblib.load('./models/rfc_model.pkl')
+model = tf.keras.models.load_model('./models/model.h5')
 
 # Load the shap DeepExplainer
 explainer = shap.DeepExplainer(model, np.zeros((1, 128, 128, 3)))  # Provide an empty example to determine the expected input shape
